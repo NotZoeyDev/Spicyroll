@@ -5,7 +5,7 @@ Can I get uuhhhh, free animes?
 # Seriously though
 
 You'll need to (at the moment) change these two lines in `spicy.js`:  
-Line 76: Change the path to whatever folder you want to save your animes to.  
+Line 77: Change the path to whatever folder you want to save your animes to.  
 Line 82: Change the path to the player you wanna use, for linux users, it could be as simple as "mpv" or whatever player you use.  
 For windows users, you'll have to specify the full path of the player because fuck you.  
 
