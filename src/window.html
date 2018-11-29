@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    </head>
+
+    <body>
+        <nav>
+            <h2>Spicyroll</h2>
+            <form>
+                <input type="text" value="" placeholder="search">
+            </form>
+        </nav> 
+
+        <div class="player" data-show="false">
+            <p>Playing episode <span class="episode"></span> of <span class="show"></span></p>
+            <div class="torrent-info">
+                <p>Speed: <span class="speed"></span></p>
+                <p>Progress: <span class="progress"></span></p>
+            </div>
+        </div>
+
+        <div class="modal" data-show="false">
+            <div class="view">
+                <div class="image">
+                    <img src="">
+                </div>
+                <div class="info">
+                    <h2 class="name"></h2>
+                    <ul class="episodes"></ul>
+                </div>
+            </div>
+        </div>
+
+        <main>
+            <script src="spicy.js"></script>
+        </main>
+    </body>
+</html>
