@@ -3,9 +3,9 @@
 Can I get uuhhhh, free animes?
 
 # How to use
-No precompilled binaries quite yet (Waiting for an icon to be made).
-Simply `git clone` the repo, `npm install` and then `npm start` to use the latest version.
-The app will now asks you to set your save location and player path on launch.
+No precompilled binaries quite yet (Waiting for an icon to be made).  
+Simply `git clone` the repo, `npm install` and then `npm start` to use the latest version.  
+The app will now asks you to set your save location and player path on launch.  
 
 # How this shit works
 
