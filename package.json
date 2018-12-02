@@ -16,6 +16,7 @@
     },
     "main": "src/app.js",
     "dependencies": {
+        "electron-store": "^2.0.0",
         "request": "^2.88.0",
         "webtorrent": "^0.102.4"
     }

@@ -1,104 +1,143 @@
 /*
     Spicy.JS
-    -> Main code for the app.
+    -> UI code for the app.
 */
 
 // Imports
-const API = require('./api'), WebTorrent = require('WebTorrent'), spawn = require('child_process').spawn, path = require('path'), fs = require('fs');
+const API = require('./libs/api'), torrent = require('./libs/torrent'), configs = require('./libs/configs');
+const { remote } = require('electron'), { Menu } = remote;
 
-// Fetch the animes list and add them to the page
-API.fetchAnimes((episodes) => {
-    for(let episode of episodes) {
-        let episodeElement = document.createElement("p");
-        episodeElement.innerText = episode.name;
-        episodeElement.dataset.code = episode.code;
-        document.querySelector("main").appendChild(episodeElement);
+// Div used to block user input while doing stuff
+let blocker = document.querySelector(".blocker");
 
-        episodeElement.addEventListener("click", (event) => {
-            event.stopPropagation();
+// Manage the modal
+let modal = new class ModalManager {
+    constructor() {
+        this.modal = document.querySelector(".view");
+        this.background = document.querySelector(".modal");
 
-            API.fetchEpisodes(episodeElement.dataset.code, (data) => {
-                openModal(episodeElement.innerText, data);
-            });
-        });
+        this.background.addEventListener("click", (event) => this.closeBackground(event));
     }
-});
 
-// Show the modal for animes
-let modal = document.querySelector(".modal");
-let player = document.querySelector(".player");
+    closeBackground(event) {
+        if(event.target.className == "modal") {
+            this.background.dataset.show = "false";
+            window._anime = null;
+    
+            this.modal.querySelector(".image img").src = "";
+            this.modal.querySelector(".name").innerText = "";
+            this.modal.querySelector(".episodes").innerHTML = "";
+            this.modal.dataset.show = "false";
+        }
+    }
 
-function openModal(name, animeData) {
-    modal.querySelector(".image img").src = animeData.image;
-    modal.querySelector(".name").innerText = name;
+    showBackground() {
+        this.background.dataset.show = "true";
+    }
 
-    let episodesList = modal.querySelector(".episodes");
+    openModal(animeData) {
+        this.showBackground();
 
-    for(let episode of animeData.episodes) {
-        let episodeItem = document.createElement("li");
-        episodeItem.innerText = `Episode ${episode.id}`;
+        this.modal.querySelector(".image img").src = animeData.image;
+        this.modal.querySelector(".name").innerText = window._anime;
 
-        for(let quality in episode.quality) {
-            let qualityItem = document.createElement("span");
-            qualityItem.innerText = episode.quality[quality];
-            qualityItem.addEventListener("click", (event) => {
-                event.preventDefault();
+        let episodesList = this.modal.querySelector(".episodes");
 
-                player.querySelector(".show").innerText = modal.querySelector(".name").innerText;
-                player.querySelector(".episode").innerText = episode.id;
+        for(let episode of animeData.episodes) {
+            let episodeItem = document.createElement("li");
+            episodeItem.innerText = `Episode ${episode.id}`;
 
-                playEpisode(episode.links[quality]);
-            });
+            for(let quality in episode.quality) {
+                let qualityItem = document.createElement("span");
+                qualityItem.innerText = episode.quality[quality];
 
-            episodeItem.appendChild(qualityItem);
+                qualityItem.addEventListener("click", (event) => {
+                    event.preventDefault();
+
+                    window._episode = episode.id;
+                    blocker.dataset.enable = "true";
+
+                    torrent.playEpisode(episode.links[quality], () => {
+                        blocker.dataset.enable = "false";
+                    });
+                });
+
+                qualityItem.addEventListener("contextmenu", (event) => {
+                    event.preventDefault();
+
+                    window._episode = episode.id;
+                    blocker.dataset.enable = "true";
+
+                    torrent.downloadEpisode(episode.links[quality], () => {
+                        blocker.dataset.enable = "false";
+                    });
+                });
+
+                episodeItem.appendChild(qualityItem);
+            }
+
+            episodesList.appendChild(episodeItem);
         }
 
-        episodesList.appendChild(episodeItem);
+        this.modal.dataset.show = "true";
     }
-
-    modal.dataset.show = "true";
 }
 
-modal.addEventListener("click", (event) => {
-    if(event.target.className == "modal") {
-        modal.dataset.show = "false";
+configs.check();
 
-        modal.querySelector(".image img").src = "";
-        modal.querySelector(".name").innerText = "";
-        modal.querySelector(".episodes").innerHTML = "";
+// Fetch the animes list and add them to the page
+API.fetchAnimes((animes) => {
+    for(let anime of animes) {
+        let animeElement = document.createElement("p");
+        animeElement.innerText = anime.name;
+        document.querySelector("main").appendChild(animeElement);
+
+        // Open the episode selection screen
+        animeElement.addEventListener("click", (event) => {
+            API.fetchEpisodes(anime.code, (data) => {
+                window._anime = anime.name;
+                modal.openModal(data);
+            });
+        });
+
+        // Extra option/context menu
+        animeElement.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+
+            API.fetchEpisodes(anime.code, (data) => {
+                let contextMenuTemplate = [];
+
+                let downloadItem = {
+                    label: "Download anime",
+                    submenu: []
+                };
+
+                let qualities = data.episodes[0].quality;
+
+                for(let quality of qualities) {
+                    downloadItem.submenu.push({
+                        label: quality,
+                        click: () => {
+                            window._anime = anime.name;
+
+                            modal.showBackground();
+
+                            torrent.downloadAnime(quality, data.episodes, () => {
+                                window._anime = null;
+                                modal.closeBackground();
+                            });
+                        }
+                    });
+                }
+
+                contextMenuTemplate[0] = downloadItem;
+
+                let animeContextMenu = Menu.buildFromTemplate(contextMenuTemplate);
+                animeContextMenu.popup({window: remote.getCurrentWindow()});
+            });
+        });
     }
 });
-
-// Play an episode
-function playEpisode(TorrentID) {
-    let TorrentClient = new WebTorrent();
-
-    TorrentClient.add(TorrentID, {
-        path: path.normalize(`M:/Animes/${modal.querySelector(".name").innerText}/`) // CHANGE THIS TO THE PATH YOU WANT
-    }, (torrent) => {
-        let server = torrent.createServer();
-        server.listen(5000);
-
-        let process = spawn(`${path.normalize("C:\\Program Files\\DAUM\\PotPlayer\\PotPlayerMini64.exe")}`, ["http://localhost:5000/0"]); // CHANGE THIS TO THE PLAYER YOU WANT
-
-        TorrentClient.on('torrent', (torrent) => {
-            player.dataset.show = "true";
-        });
-
-        torrent.on('download', (bytes) => {
-            player.querySelector(".speed").innerText = torrent.downloadSpeed;
-            player.querySelector(".progress").innerText = `${Math.floor(torrent.progress * 100)}%`;
-        });
-
-        process.on('close', (code) => {
-            server.close();
-            torrent.destroy(() => {                
-                player.dataset.show = "false";
-                TorrentClient.destroy();
-            })
-        });
-    });
-}
 
 // Search feature
 let searchInput = document.querySelector('input[type="text"]');
@@ -110,4 +149,10 @@ searchInput.addEventListener("input", (event) => {
     for(let i of items) {
         i.style.display = i.innerText.toLowerCase().includes(searchQuery) ? "inline-block" : "none";
     }
+});
+
+// Open settings
+document.querySelector("nav h2").addEventListener("click", (event) => {
+    event.preventDefault();
+    configs.openSettings();
 });

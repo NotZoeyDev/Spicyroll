@@ -83,6 +83,10 @@ main p {
     background-color: rgba(0, 0, 0, 0.75);
 }
 
+.view[data-show="false"] {
+    display: none;
+}
+
 .view {
     position: absolute;
     top: 50%;
@@ -93,6 +97,7 @@ main p {
     color: white;
     display: flex;
     background-color: rgb(30, 30, 30);
+    z-index: 3;
 }
 
 .image {
@@ -144,7 +149,27 @@ main p {
     border-radius: 3px;
 }
 
+.player p {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
 .torrent-info {
     display: flex;
     justify-content: space-between;
+}
+
+.blocker[data-enable="true"] {
+    pointer-events: all;
+}
+
+.blocker {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
 }
