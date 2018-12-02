@@ -10,6 +10,7 @@ const WebTorrent = require('webtorrent'), remote = require('electron').remote, p
 let DownloadManager = new class DownloadManager {
     constructor() {
         this.panel = document.querySelector(".player");
+        this.window = remote.getCurrentWindow();
     }
 
     openPanel(streaming=false) {
@@ -17,7 +18,7 @@ let DownloadManager = new class DownloadManager {
         this.panel.querySelector(".show").innerText = window._anime;
         this.panel.querySelector(".episode").innerText = window._episode;
 
-        remote.getCurrentWindow().setTitle(`Spicyroll | ${streaming ? "Playing" : "Downloading"} episode ${window._episode} of ${window._anime}`);
+        this.window.setTitle(`Spicyroll | ${streaming ? "Playing" : "Downloading"} episode ${window._episode} of ${window._anime}`);
 
         this.panel.dataset.show = "true";
     }
@@ -25,12 +26,15 @@ let DownloadManager = new class DownloadManager {
     updatePanel(speed, progress) {
         this.panel.querySelector(".speed").innerText = `${(speed / 1000000).toFixed(2)} Mb/s`;
         this.panel.querySelector(".progress").innerText = `${Math.floor(progress * 100)}%`;
+
+        this.window.setProgressBar(progress);
     }
 
     closePanel() {
         this.panel.dataset.show = "false";
         document.querySelector(".blocker").dataset.enable = "false";
         remote.getCurrentWindow().setTitle(`Spicyroll`);
+        this.window.setProgressBar(-1);
     }
 }
 

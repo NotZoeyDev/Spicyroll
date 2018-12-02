@@ -1,23 +1,35 @@
 {
     "name": "spicyroll",
     "description": "Stream your favorite animes in a super legal fashion!",
-    "version": "1.0.0",
-    "license": "Do What The Fuck You Want To Public License (WTFPL)",
+    "version": "2.0.0",
+    "homepage": "https://spicyroll.panties.moe/",
+    "license": "WTFPL",
     "author": {
         "name": "Zoey",
         "url": "https://panties.moe",
         "email": "zoey@panties.moe"
     },
-    "devDependencies": {
-        "electron": "^3.0.10"
+    "repository": {
+        "type": "git",
+        "url": "http://github.com/NotZoeyDev/Spicyroll.git"
     },
-    "scripts": {
-        "start": "electron ."
-    },
-    "main": "src/app.js",
     "dependencies": {
         "electron-store": "^2.0.0",
         "request": "^2.88.0",
         "webtorrent": "^0.102.4"
+    },
+    "devDependencies": {
+        "electron": "^3.0.10",
+        "electron-builder": "^20.38.2"
+    },
+    "main": "src/app.js",
+    "scripts": {
+        "start": "electron .",
+        "pack": "electron-builder --dir",
+        "dist": "electron-builder"
+    },
+    "build": {
+        "appId": "moe.panties.spicyroll",
+        "productName": "Spicyroll"
     }
 }
