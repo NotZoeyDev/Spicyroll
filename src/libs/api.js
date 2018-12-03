@@ -25,7 +25,7 @@ class API {
             // Go through all the shows link and parse them
             for(let s of shows) {
                 returnData.push({
-                    name: s.innerText,
+                    name: s.title,
                     code: path.basename(s.href)
                 });
             }
@@ -66,8 +66,20 @@ class API {
                 instead, they have a one liner script that sets a variable named "hs_showid" which is then used to fetch the episodes via an API endpoint.
                 This is the only way I've found to get the list of episodes.
                 (This was actually changed, before I used to eval the actual script and "clone" the variable inside another one, this doesn't work here so I simply extract it by spltiing  it up)
+                EDIT:
+                    I had to tweak this piece of shit code once again to make idolm@aster work (and probably some other animes).
+                    There was an issue where there would be cloudflare script in there for whatever reason and that'd make the parsing script just not work.
+                    Now we go through a loop of every script tags in there to find the correct one and parse it accordingly.
             */
-            const showid = tempDOM.querySelector(".entry-content script").innerText.split(" ")[3].replace(";" ,"").trim(); // Create a copy of that variable
+            let showid = null;
+
+            let contentScripts = tempDOM.querySelectorAll(".entry-content script");
+            for(let script of contentScripts) {
+                if(script.innerText.includes("hs_showid")) {
+                    showid = script.innerText.replace("var hs_showid = ", "").trim().replace(";" ,"").trim();
+                    break;
+                }
+            }
 
             tempDOM = null;
 
@@ -87,21 +99,16 @@ class API {
                         let episodeQuality = [];
                         let episodeLinks = [];
 
+                        let qualityAvailable = ["400", "480", "720", "1080"]
+
                         // Get the quality format + magnet links
                         for(let quality of episode.querySelector(".rls-links-container").childNodes) {
-                            if(quality.classList.contains("link-480p")) {
-                                episodeQuality.push("480p");
-                                episodeLinks.push(quality.querySelector(".hs-magnet-link").childNodes[0].href);
-                            }
-        
-                            if(quality.classList.contains("link-720p")) {
-                                episodeQuality.push("720p");
-                                episodeLinks.push(quality.querySelector(".hs-magnet-link").childNodes[0].href);
-                            }
-        
-                            if(quality.classList.contains("link-1080p")) {
-                                episodeQuality.push("1080p");
-                                episodeLinks.push(quality.querySelector(".hs-magnet-link").childNodes[0].href);
+                            for(let q of qualityAvailable) {
+                                if(quality.classList.contains(`link-${q}p`)) {
+                                    episodeQuality.push(`${q}p`);
+                                    episodeLinks.push(quality.querySelector(".hs-magnet-link").childNodes[0].href);
+                                    break;
+                                }
                             }
                         }
 

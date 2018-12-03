@@ -10,6 +10,8 @@ const { remote } = require('electron'), { Menu } = remote;
 // Div used to block user input while doing stuff
 let blocker = document.querySelector(".blocker");
 
+remote.getCurrentWindow().webContents.openDevTools();
+
 // Manage the modal
 let modal = new class ModalManager {
     constructor() {
