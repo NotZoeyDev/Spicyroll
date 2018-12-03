@@ -1,6 +1,6 @@
 # Spicyroll  
 An easy-to-use anime streaming app made with Electron!  
-![alt text](https://github.com/notzoeydev/spicyroll/raw/master/src/screen.png "App screenshot")
+![alt text](https://github.com/NotZoeyDev/Spicyroll/blob/master/screen.png?raw=true "App screenshot")
 
 # Features  
 * Streams any anime you want with only a few clicks  
