@@ -1,16 +1,32 @@
-# Spicyroll
+# Spicyroll  
+An easy-to-use anime streaming app made with Electron!  
+![alt text](https://github.com/notzoeydev/spicyroll/raw/master/src/screen.png "App screenshot")
 
-Can I get uuhhhh, free animes?
+# Features  
+* Streams any anime you want with only a few clicks  
+* Downloads single episodes or entire animes with a single right click  
+* That's pretty much all it does, it does it well though  
 
-# How to use
-No precompilled binaries quite yet (Waiting for an icon to be made).  
-Simply `git clone` the repo, `npm install` and then `npm start` to use the latest version.  
-The app will now asks you to set your save location and player path on launch.  
+# How to use  
+On first launch, the app will ask you to set up your save location for animes and it'll ask you to set up your video player.  
+Just a tip, for linux users, you should be able to set your video player by simply typing the command name. eg: "mpv" should work.  
+Clicking on the "spicyroll" text will bring back the setting menu if something goes wrong.  
 
-# How this shit works
+# Tips   
+* Single click on an anime name will bring up the modal to select which episode you want to watch.
+* Right click on an anime name will bring up a menu to download the entire anime with your preferred quality.
+* Right click on a specific quality while in the modal will let you download this episode specfically.
 
-Basically, it fetch one page from Horriblesubs to get their animes list, then with some fuckery, we can get the episodes list by extracting some JS variable stuck in the anime page and use that variable to fetch the episodes from their API (Yes, horriblesubs has somekind of API for whatever reasons) and we run a recursive loop there to get all the epsiodes available.  
-You can find all that magic inside `api.js`, the UI code happens in `spicy.js`.
+# Disclaimer
+This app is *illegal*, as in, the app doesn't host or own any illegal content but it is to access copyrighted content.  
+The app upon itself is legal but its use might not be.  
+To make it clearer, the app basically fetch animes and information from (horriblesubs)[https://horriblesubs.info] and presents it to the users with a nicer interface.
+Use at your own risk.
 
-# Okay but why
-Because I can, please hire me.
+# For dev
+You can copy `api.js` and use it in any your own app or script to fetch data easily from Horriblesubs for your own use.
+
+# Packages used
+God bless (WebTorrent)[https://github.com/webtorrent/webtorrent] for being easy to use!  
+(Electron-store)[https://github.com/sindresorhus/electron-store] was also used to store the settings easily.  
+(request)[https://github.com/request/request] used to easily fetch data from websites.  

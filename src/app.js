@@ -33,10 +33,10 @@ app.on('ready', () => {
     SpicyWindow.on('ready-to-show', () => {
         SpicyWindow.show();
     });
+
 });
 
-// Handles closing the app correctly
 app.on('window-all-closed', () => {
     SpicyWindow = null;
-    app.exit(0);
+    app.quit();
 });

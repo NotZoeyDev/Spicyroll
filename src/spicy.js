@@ -139,7 +139,7 @@ API.fetchAnimes((animes) => {
     }
 
     // Handles the protocol stuff
-    let args = remote.getCurrentWindow().arguments;
+    let args = remote.getCurrentWindow().custom.arguments;
     console.log(args);
 
     if(args.length == 2) {

@@ -30,10 +30,13 @@ let DownloadManager = new class DownloadManager {
         this.window.setProgressBar(progress);
     }
 
+    stopWatching() {
+        document.querySelector(".blocker").dataset.enable = "false";
+        this.window.setTitle(`Spicyroll`);
+    }
+
     closePanel() {
         this.panel.dataset.show = "false";
-        document.querySelector(".blocker").dataset.enable = "false";
-        remote.getCurrentWindow().setTitle(`Spicyroll`);
         this.window.setProgressBar(-1);
     }
 }
@@ -53,6 +56,7 @@ class TorrentManager {
 
             torrent.on('done', () => {
                 DownloadManager.closePanel();
+                DownloadManager.stopWatching();
                 TorrentClient.destroy(() => {
                     callback();
                 });
@@ -102,7 +106,7 @@ class TorrentManager {
             path: path.normalize(`${configs.getSetting("save")}/${window._anime}/`)
         }, (torrent) => {
             TorrentClient.on('torrent', (torrent) => {
-                DownloadManager.openPanel();
+                DownloadManager.openPanel(true);
 
                 let server = torrent.createServer();
                 server.listen(1337);      
@@ -113,6 +117,7 @@ class TorrentManager {
                     playing = false;
                     
                     if(downloaded) {
+                        DownloadManager.stopWatching();
                         TorrentClient.destroy(() => {
                             callback();
                         })
@@ -121,10 +126,11 @@ class TorrentManager {
             });
 
             torrent.on('done', () => {
-                DownloadManager.closePanel();
                 downloaded = true;
+                DownloadManager.closePanel();
 
                 if(!playing) {
+                    DownloadManager.stopWatching();
                     TorrentClient.destroy(() => {
                         callback();
                     });
