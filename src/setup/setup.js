@@ -18,7 +18,7 @@ new class Settings {
         let playerText = document.querySelector("#player-text");
         playerText.addEventListener("input", (event) => {
             configs.saveSetting("player", playerText.value);
-        })
+        });
 
         if(configs.getSetting("save")) locationText.value = configs.getSetting("save");
         if(configs.getSetting("player")) playerText.value = configs.getSetting("player");

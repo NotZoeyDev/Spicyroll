@@ -137,6 +137,22 @@ API.fetchAnimes((animes) => {
             });
         });
     }
+
+    // Handles the protocol stuff
+    let args = remote.getCurrentWindow().arguments;
+    console.log(args);
+
+    if(args.length == 2) {
+        let animeName = args[1].replace("spicyroll://", "").split("_").join(" ").trim().toLowerCase();
+
+        let items = document.querySelectorAll("main p");
+        for(let i of items) {
+            if(i.innerText.toLowerCase() == animeName.substring(0, animeName.length - 1)) {
+                i.click();
+                break;
+            }
+        }
+    }
 });
 
 // Search feature

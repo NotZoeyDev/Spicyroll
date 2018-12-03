@@ -30,6 +30,12 @@
     },
     "build": {
         "appId": "moe.panties.spicyroll",
-        "productName": "Spicyroll"
+        "productName": "Spicyroll",
+        "protocols": [
+            {
+                "name": "Spicyroll",
+                "schemes": ["spicyroll"]
+            }
+        ]
     }
 }
