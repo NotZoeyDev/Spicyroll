@@ -14,6 +14,7 @@
         "url": "http://github.com/NotZoeyDev/Spicyroll.git"
     },
     "dependencies": {
+        "discord-rpc": "^3.0.1",
         "electron-store": "^2.0.0",
         "request": "^2.88.0",
         "webtorrent": "^0.102.4"

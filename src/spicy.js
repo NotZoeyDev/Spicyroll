@@ -139,8 +139,7 @@ API.fetchAnimes((animes) => {
     }
 
     // Handles the protocol stuff
-    let args = remote.getCurrentWindow().custom.arguments;
-    console.log(args);
+    let args = remote.getCurrentWindow().arguments;
 
     if(args.length == 2) {
         let animeName = args[1].replace("spicyroll://", "").split("_").join(" ").trim().toLowerCase();
@@ -163,7 +162,7 @@ searchInput.addEventListener("input", (event) => {
 
     let items = document.querySelectorAll("main p");
     for(let i of items) {
-        i.style.display = i.innerText.toLowerCase().includes(searchQuery) ? "inline-block" : "none";
+        i.className = i.innerText.toLowerCase().includes(searchQuery) ? "" : "hide";
     }
 });
 

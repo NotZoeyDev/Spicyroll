@@ -5,6 +5,7 @@
 
 // Imports
 const WebTorrent = require('webtorrent'), remote = require('electron').remote, path = require('path'), fs = require('fs'), spawn = require('child_process').spawn, configs = require('./configs');;
+const Discord = require('./discord');
 
 // Manages the speed/download interface
 let DownloadManager = new class DownloadManager {
@@ -19,6 +20,7 @@ let DownloadManager = new class DownloadManager {
         this.panel.querySelector(".episode").innerText = window._episode;
 
         this.window.setTitle(`Spicyroll | ${streaming ? "Playing" : "Downloading"} episode ${window._episode} of ${window._anime}`);
+        Discord.setActivity(window._anime, window._episode, streaming);
 
         this.panel.dataset.show = "true";
     }
@@ -33,6 +35,8 @@ let DownloadManager = new class DownloadManager {
     stopWatching() {
         document.querySelector(".blocker").dataset.enable = "false";
         this.window.setTitle(`Spicyroll`);
+        this.window.setProgressBar(-1);
+        Discord.setActivity(null, null, false);
     }
 
     closePanel() {
