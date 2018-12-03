@@ -16,6 +16,7 @@ Clicking on the "spicyroll" text will bring back the setting menu if something g
 * Single click on an anime name will bring up the modal to select which episode you want to watch.
 * Right click on an anime name will bring up a menu to download the entire anime with your preferred quality.
 * Right click on a specific quality while in the modal will let you download this episode specfically.
+* There's a special spicyroll:// protocol available, you can load an anime directly by loading spicyroll://anime_name and it will load up as soon as you launch the app.
 
 # Disclaimer
 This app is *illegal*, as in, the app doesn't host or own any illegal content but it is to access copyrighted content.  
