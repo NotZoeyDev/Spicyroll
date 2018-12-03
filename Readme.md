@@ -20,13 +20,13 @@ Clicking on the "spicyroll" text will bring back the setting menu if something g
 # Disclaimer
 This app is *illegal*, as in, the app doesn't host or own any illegal content but it is to access copyrighted content.  
 The app upon itself is legal but its use might not be.  
-To make it clearer, the app basically fetch animes and information from (horriblesubs)[https://horriblesubs.info] and presents it to the users with a nicer interface.
+To make it clearer, the app basically fetch animes and information from [horriblesubs](https://horriblesubs.info) and presents it to the users with a nicer interface.
 Use at your own risk.
 
 # For dev
 You can copy `api.js` and use it in any your own app or script to fetch data easily from Horriblesubs for your own use.
 
 # Packages used
-God bless (WebTorrent)[https://github.com/webtorrent/webtorrent] for being easy to use!  
-(Electron-store)[https://github.com/sindresorhus/electron-store] was also used to store the settings easily.  
-(request)[https://github.com/request/request] used to easily fetch data from websites.  
+God bless [WebTorrent](https://github.com/webtorrent/webtorrent) for being easy to use!  
+[Electron-store](https://github.com/sindresorhus/electron-store) was also used to store the settings easily.  
+[request](https://github.com/request/request) used to easily fetch data from websites.  
