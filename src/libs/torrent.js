@@ -86,7 +86,7 @@ class TorrentManager {
         // Recursive function for downloading every episodes
         let downloadEpisodes = () => {
             if(magnetURIs.length > 0) {
-                window._episode = magnetURIs.length;
+                 window._episode = magnetURIs.length;
                 this.downloadEpisode(magnetURIs[0], () => {
                     magnetURIs.splice(0, 1);
                     downloadEpisodes();
@@ -95,7 +95,7 @@ class TorrentManager {
                 callback();
             }
         }
-        
+            
         downloadEpisodes();
     }
 
@@ -115,7 +115,7 @@ class TorrentManager {
                 let server = torrent.createServer();
                 server.listen(1337);      
                 
-                let player = spawn(configs.getSetting("player"), ["http://localhost:1337/0"]);
+                let player = spawn(configs.getSetting("player"), [`http://localhost:1337/0`]);
 
                 player.on('close', () => {
                     playing = false;
