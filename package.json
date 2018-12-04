@@ -26,8 +26,8 @@
     "main": "src/app.js",
     "scripts": {
         "start": "electron .",
-        "pack": "electron-builder --dir ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true",
-        "dist": "electron-builder ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true"
+        "pack": "set ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true && electron-builder --dir ",
+        "dist": "set ELECTRON_BUILDER_ALLOW_UNRESOLVED_DEPENDENCIES=true && electron-builder"
     },
     "build": {
         "appId": "moe.panties.spicyroll",
