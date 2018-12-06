@@ -104,6 +104,8 @@ API.fetchAnimes((animes) => {
         animeElement.addEventListener("contextmenu", (event) => {
             event.preventDefault();
 
+            blocker.dataset.enable = "true";
+
             API.fetchEpisodes(anime.code, (data) => {
                 let contextMenuTemplate = [];
 
@@ -124,6 +126,7 @@ API.fetchAnimes((animes) => {
 
                             torrent.downloadAnime(quality, data.episodes, () => {
                                 window._anime = null;
+                                blocker.dataset.enable = "false";
                                 modal.closeBackground();
                             });
                         }
