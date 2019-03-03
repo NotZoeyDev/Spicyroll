@@ -15,55 +15,79 @@
 	},
 	"main": "src/app.js",
 	"devDependencies": {
-		"electron-forge": "^5.2.4",
 		"electron-prebuilt-compile": "4.0.0",
-		"vue-devtools": "^5.0.0-beta.1"
+		"electron-builder": "^20.38.5"
 	},
 	"dependencies": {
 		"@ffmpeg-installer/ffmpeg": "^1.0.17",
 		"cheerio": "^1.0.0-rc.2",
 		"electron-compile": "^6.4.4",
 		"electron-squirrel-startup": "^1.0.0",
-		"vue": "^2.6.7",
 		"request": "^2.88.0",
+		"vue": "^2.6.7",
 		"vueify": "^9.4.1",
 		"webtorrent": "^0.103.0"
 	},
 	"scripts": {
-		"start": "electron-forge start",
-		"package": "electron-forge package",
-		"make": "electron-forge make"
+		"start": "electron . DEBUG",
+		"pack": "electron-builder --dir",
+		"dist": "electron-builder"
 	},
-	"config": {
-		"forge": {
-			"make_targets": {
-				"win32": [
-					"squirrel"
-				],
-				"darwin": [
-					"zip"
-				],
-				"linux": [
-					"deb",
-					"rpm"
-				]
-			},
-			"electronPackagerConfig": {
-				"packageManager": "npm"
-			},
-			"electronWinstallerConfig": {
-				"name": "spicyroll"
-			},
-			"electronInstallerDebian": {},
-			"electronInstallerRedhat": {},
-			"github_repository": {
-				"owner": "",
-				"name": ""
-			},
-			"windowsStoreConfig": {
-				"packageName": "Spicyroll",
-				"name": "spicyroll"
-			}
+	"build": {
+		"appId": "moe.panties.spicyroll",
+		"productName": "Spicyroll",
+		"mac": {
+			"category": "public.app-category.video",
+			"icon": "src/assets/icon.icns",
+			"target": [
+				{
+					"target": "dmg",
+					"arch": [
+						"x64"
+					]
+				},
+				{
+					"target": "zip",
+					"arch": [
+						"x64"
+					]
+				}
+			]
+		},
+		"win": {
+			"icon": "src/assets/icon.ico",
+			"target": [
+				{
+					"target": "nsis",
+					"arch": [
+						"x64"
+					]
+				},
+				{
+					"target": "zip",
+					"arch": [
+						"x64"
+					]
+				}
+			]
+		},
+		"linux": {
+			"icon": "src/assets/icon.png",
+			"category": "Video",
+			"target": [
+				{
+					"target": "AppImage",
+					"arch": [
+						"x64"
+					]
+				},
+				{
+					"target": "zip",
+					"arch": [
+						"x64"
+					]
+				}
+			]
 		}
 	}
 }

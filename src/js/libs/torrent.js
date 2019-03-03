@@ -4,7 +4,7 @@
 */
 
 // Imports
-const WebTorrent = require('webtorrent'), fs = require('fs'), path = require('path'), ffmpeg = require('@ffmpeg-installer/ffmpeg').path, { exec } = require('child_process');
+const WebTorrent = require('webtorrent'), fs = require('fs'), path = require('path'), ffmpeg = require('@ffmpeg-installer/ffmpeg').path.replace('app.asar', 'app.asar.unpacked'), { exec } = require('child_process');
 
 // Methods goes here
 export default {

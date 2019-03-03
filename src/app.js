@@ -7,29 +7,36 @@
 const {BrowserWindow, app} = require('electron');
 
 // Our window object
-let MainWindow;
+let AnimeWindow;
 
 // Load our Window
 app.on('ready', () => {
-    // Install vue-devtools
-    //require('vue-devtools').install();
-
-    MainWindow = new BrowserWindow({
-        show: false
+    
+    // Setup our BrowserWindow
+    AnimeWindow = new BrowserWindow({
+        show: false,
+        icon: `${__dirname}/assets/icon.png`
     });
     
-    MainWindow.loadFile(`${__dirname}/app.html`);
+    // Load the html file
+    AnimeWindow.loadFile(`${__dirname}/app.html`);
 
-    MainWindow.setMenu(null);
+    // Remove the menu 
+    // TODO: macOS menu
+    AnimeWindow.setMenu(null);
 
-    MainWindow.webContents.openDevTools();
+    // Dev tools
+    if(process.argv.includes("DEBUG"))
+        AnimeWindow.webContents.openDevTools();
 
-    MainWindow.on('ready-to-show', () => {
-        MainWindow.show();
+    // Show the Window when it's ready
+    AnimeWindow.on('ready-to-show', () => {
+        AnimeWindow.show();
     });
 });
 
+// Exit when closing all windows
 app.on('window-all-closed', () => {
-    MainWindow = null;
+    AnimeWindow = null;
     app.exit();
-})
+});
