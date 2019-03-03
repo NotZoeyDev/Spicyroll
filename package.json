@@ -1,0 +1,69 @@
+{
+	"name": "spicyroll",
+	"description": "Stream your favorite animes in a super legal fashion!",
+	"version": "3.0.0",
+	"homepage": "https://spicyroll.panties.moe",
+	"license": "WTFPL",
+	"author": {
+		"name": "Zoey",
+		"url": "https://panties.moe",
+		"email": "zoey@panties.moe"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/NotZoeyDev/Spicyroll.git"
+	},
+	"main": "src/app.js",
+	"devDependencies": {
+		"electron-forge": "^5.2.4",
+		"electron-prebuilt-compile": "4.0.0",
+		"vue-devtools": "^5.0.0-beta.1"
+	},
+	"dependencies": {
+		"@ffmpeg-installer/ffmpeg": "^1.0.17",
+		"cheerio": "^1.0.0-rc.2",
+		"electron-compile": "^6.4.4",
+		"electron-squirrel-startup": "^1.0.0",
+		"vue": "^2.6.7",
+		"request": "^2.88.0",
+		"vueify": "^9.4.1",
+		"webtorrent": "^0.103.0"
+	},
+	"scripts": {
+		"start": "electron-forge start",
+		"package": "electron-forge package",
+		"make": "electron-forge make"
+	},
+	"config": {
+		"forge": {
+			"make_targets": {
+				"win32": [
+					"squirrel"
+				],
+				"darwin": [
+					"zip"
+				],
+				"linux": [
+					"deb",
+					"rpm"
+				]
+			},
+			"electronPackagerConfig": {
+				"packageManager": "npm"
+			},
+			"electronWinstallerConfig": {
+				"name": "spicyroll"
+			},
+			"electronInstallerDebian": {},
+			"electronInstallerRedhat": {},
+			"github_repository": {
+				"owner": "",
+				"name": ""
+			},
+			"windowsStoreConfig": {
+				"packageName": "Spicyroll",
+				"name": "spicyroll"
+			}
+		}
+	}
+}
