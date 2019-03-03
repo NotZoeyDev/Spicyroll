@@ -1,0 +1,232 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+nav {
+    background-color: #F44336;
+    color: white;
+    display: flex;
+    height: 40px;
+    justify-content: space-between;
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+}
+.search-bar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 30px;
+    margin: 5px 0px 5px 0px;
+    padding: 0px 10px 0px 10px;
+    border: 0;
+    outline: 0;
+    background-color: white;
+    box-shadow: 0px 0px 0px rgb(20, 20, 20);
+    color: black;
+    border-radius: 3px 3px 3px 3px;
+    transition: all .2s;
+}
+.search-bar:focus {
+    background-color: rgb(20, 20, 20);
+    box-shadow: 0px 0px 5px rgb(20, 20, 20);
+    border-radius: 3px 3px 0px 0px;
+    color: white;
+}
+.search-results {
+    position: absolute;
+    z-index: 3;
+    top: 35px;
+    left: 50%;
+    width: 420px;
+    max-height: 300px;
+    transform: translateX(-50%);
+    background-color: rgb(20, 20, 20);
+    border-radius: 0px 0px 3px 3px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-shadow: 0px 0px 5px rgb(20, 20, 20);
+}
+.search-results span:hover {
+    background-color: rgb(30, 30, 30);
+}
+.search-results span {
+    cursor: pointer;
+    padding: 2px 5px 2px 5px;
+    transition: all .2s;
+}
+nav h2 {
+    padding: 0px 5px 0px 5px;
+    cursor: pointer;
+    transition: background-color .2s;
+    line-height: 40px;
+}
+nav h2:hover {
+    background-color: rgb(240, 90, 80);
+}
+nav h2:active {
+    background-color: rgb(240, 90, 60);
+}
+
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 5px;
+}
+.card {
+    display: flex;
+    flex-direction: column-reverse;
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.card:hover .card-cover {
+    transform: scale(1.1);
+}
+.card-cover {
+    object-fit: cover;
+    flex: 1;
+    transition: transform .2s;
+    transform: scale(1.0);
+}
+.card-title {
+    position: absolute;
+    width: 100%;
+    background-color: rgba(20, 20, 20, 0.75);
+    color: white;
+}
+.card-title p {
+    user-select: none;
+    flex: 1;
+    padding: 5px;
+}
+
+
+.gallery {
+    height: calc(100% - 45px);
+    width: 100%;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding: 5px 0px 0px 0px;
+}
+
+
+.anime-window {
+    width: 700px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    color: white;
+}
+.anime-window-title {
+    margin-bottom: 20px;
+    font-size: 1em;
+    user-select: none;
+}
+.anime-window-content {
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+    height: 350px;
+}
+.anime-window-content div {
+    flex-basis: 30%;
+}
+.anime-window-cover img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    box-shadow: 0px 0px 15px rgb(0, 0, 0, 0.5);
+}
+.anime-window-episodes, .anime-window-qualities {
+    display: flex;
+    flex-basis: 30%;
+    flex-direction: column;
+    overflow-y: auto;
+}
+.anime-window-qualities {
+    justify-content: center;
+}
+.anime-window-content span.sel {
+    background-color: rgb(200, 200, 200);
+    color: black;
+}
+.anime-window-content span {
+    padding: 10px;
+    margin: 5px 10px 5px 0px;
+    border-radius: 2px;
+    background-color: rgb(15, 15, 15);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color .2s, color .2s;
+    box-shadow: 0px 0px 5px rgb(0, 0, 0, 0.5);
+}
+
+
+.window-wrapper.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+.window-wrapper {
+    position: absolute;
+    pointer-events: all;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    opacity: 1;
+    transition: opacity .2s;
+    background-color: rgba(0, 0, 0, 0.75);
+}
+.window-container {
+    position: absolute;
+    border-radius: 5px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(30, 30, 30);
+}
+
+
+.video-player-container.hide {
+    top: 100%;
+}
+.video-player-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: top .2s;
+    display: flex;
+    z-index: 5;
+    background-color: black;
+}
+.video-player-container video {
+    object-fit: contain;
+    width: 100%;
+    height: 100%;
+}
+
+
+* {
+    padding: 0;
+    margin: 0;
+}
+html, body, main {
+    width: 100%;
+    height: 100%;
+    font-family: 'Open Sans', sans-serif;
+}
+body {
+    overflow: hidden;
+    background-color: rgb(30, 30, 30);
+}
+
