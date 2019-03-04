@@ -20,6 +20,7 @@ import AnimeView from './AnimeView.vue';
 import SearchView from './SearchView.vue';
 import Navbar from './Navbar.vue';
 import List from './List.vue';
+import DiscordRPC from "../libs/discord";
 
 export default {
     components: {
@@ -30,7 +31,8 @@ export default {
         return {
             loading: true,
             searchEnabled: true,
-		    loadingText: "Fetching animes"
+            loadingText: "Fetching animes",
+            discord: new DiscordRPC()
         }
     },
 

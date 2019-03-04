@@ -21,6 +21,7 @@
 	"dependencies": {
 		"@ffmpeg-installer/ffmpeg": "^1.0.17",
 		"cheerio": "^1.0.0-rc.2",
+		"discord-rpc": "^3.0.1",
 		"electron-compile": "^6.4.4",
 		"electron-squirrel-startup": "^1.0.0",
 		"request": "^2.88.0",

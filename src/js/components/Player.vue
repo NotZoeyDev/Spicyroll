@@ -76,6 +76,9 @@ export default {
             var videoElement = this.$refs.player;
             videoElement.src = `http://localhost:3000/0?=${Math.random()}`;
             videoElement.play();
+             
+            // Show info on Discord
+            this.$parent.$data.discord.setActivity(this.info.name, this.info.episode);
             
             // Event listener for the player
             videoElement.addEventListener("ended", () => {
@@ -152,6 +155,9 @@ export default {
                 this.$refs.player.pause();
 
             this.$refs.player.src = "";
+
+            // Update discord RPC
+            this.$parent.$data.discord.setActivity();
 
             // Destroy our http server
             this.fileserver.close();

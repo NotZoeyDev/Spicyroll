@@ -45,7 +45,7 @@ export default {
 
             // Check if torrent is over 5 percent after 30 seconds
             setTimeout(() => {
-                if(TorrentClient.torrents[0].progress < 5/100) {
+                if(TorrentClient && TorrentClient.torrents[0] && TorrentClient.torrents[0].progress < 5/100) {
                     // Delete the video if it exists
                     if(TorrentClient.torrents[0].files[0] && TorrentClient.torrents[0].files[0].path) {
                         const videoPath = path.join(downloadFolder, TorrentClient.torrents[0].files[0].path);
