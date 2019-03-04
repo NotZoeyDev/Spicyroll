@@ -21,6 +21,7 @@
                         {{ quality }}
                     </span>
                 </div>
+                
                 <div class="anime-qualities-list" v-else></div>
             </diV>
         </div>

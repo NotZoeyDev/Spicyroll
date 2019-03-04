@@ -26,7 +26,7 @@ app.on('ready', () => {
     AnimeWindow.setMenu(null);
 
     // Dev tools
-    if(process.argv.includes("DEBUG"))
+    //if(process.argv.includes("DEBUG"))
         AnimeWindow.webContents.openDevTools();
 
     // Show the Window when it's ready

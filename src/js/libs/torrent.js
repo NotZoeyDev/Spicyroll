@@ -37,7 +37,7 @@ export default {
                     }
 
                     if(torrent.progress > 5/100) {
-                        resolve({server: TorrentServer, client: TorrentClient, file: path.normalize(`${downloadFolder}/${torrent.files[0].path}`)});
+                        resolve({server: TorrentServer, client: TorrentClient, file: path.join(downloadFolder, torrent.files[0].path)});
                         clearInterval(checkProgress);
                     }
                 }, 500);
@@ -45,7 +45,22 @@ export default {
 
             // Check if torrent is over 5 percent after 30 seconds
             setTimeout(() => {
-                if(TorrentClient.progress < 5/100) {
+                if(TorrentClient.torrents[0].progress < 5/100) {
+                    // Delete the video if it exists
+                    if(TorrentClient.torrents[0].files[0] && TorrentClient.torrents[0].files[0].path) {
+                        const videoPath = path.join(downloadFolder, TorrentClient.torrents[0].files[0].path);
+                        
+                        if(fs.existsSync(videoPath)) {
+                            fs.unlinkSync(videoPath);
+
+                            const videoFolder = path.dirname(videoPath);
+
+                            if(fs.readdirSync(videoFolder).length == 0) {
+                                fs.rmdirSync(videoFolder);
+                            }
+                        }
+                    }
+
                     TorrentClient.destroy();
                     resolve(null);
                 }

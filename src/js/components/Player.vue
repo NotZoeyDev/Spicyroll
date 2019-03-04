@@ -13,6 +13,8 @@
 
 <script>
 import TorrentManager from '../libs/torrent';
+import path from 'path';
+import fs from 'fs';
 
 export default {
     data() {
@@ -22,6 +24,8 @@ export default {
             info: null,
             track: null,
             file: null,
+            subfile: null,
+            fileserver: null,
             subtitleInterval: null,
 
             // Torrent stuff
@@ -72,19 +76,27 @@ export default {
             var videoElement = this.$refs.player;
             videoElement.src = `http://localhost:3000/0?=${Math.random()}`;
             videoElement.play();
-
+            
             // Event listener for the player
             videoElement.addEventListener("ended", () => {
                 this.closePlayer();
-            })
+            });
+
+            // Create an http server for the subtitle file
+            this.fileserver = require('http').createServer((req, res) => {
+                res.writeHead(200, {'Content-Type': 'text/plain'});
+                res.write(fs.readFileSync(this.subfile, {encoding: "UTF-8"}));
+                res.end();
+            }).listen(3001);
 
             // Extract the subtitles (Fetch it every 30 seconds to make sure it's updated)
             let fetchSubs = () => {
                 TorrentManager.extractSubs(data.file).then((subfile, done) => {
                     this.track = null;
+                    this.subfile = subfile;
                     
                     setTimeout(() => {
-                        this.track = subfile;
+                        this.track = "http://localhost:3001";
                     }, 100);
 
                     if(done) {
@@ -107,9 +119,11 @@ export default {
                 this.closePlayer();
         },
 
-        closePlayer() {
-            let path = require('path'), fs = require('fs');
+        errorHandler() {
+            console.log(this.$refs.player.error);
+        },
 
+        closePlayer() {
             // Close the subtitle loop
             if(this.subtitleInterval != null)
                 clearInterval(this.subtitleInterval);
@@ -117,8 +131,8 @@ export default {
             this.subtitleInterval = null;
 
             // Delete the subtitle file
-            if(fs.existsSync(this.track))
-                fs.unlinkSync(this.track);
+            if(fs.existsSync(this.subfile))
+                fs.unlinkSync(this.subfile);
 
             // Should we delete the video file
             if(this.client.progress < 1) {
@@ -139,13 +153,19 @@ export default {
 
             this.$refs.player.src = "";
 
+            // Destroy our http server
+            this.fileserver.close();
+
             // Reset our player
             this.ready = false;
             this.track = null;
             this.file = null;
+            this.subfile = null;
 
+            // Play the hide animation
             this.$refs.container.classList.add("hide");
 
+            // Hide everything
             setTimeout(() => {
                 this.show = false;
             }, 200);
