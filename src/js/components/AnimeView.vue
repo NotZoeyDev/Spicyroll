@@ -17,7 +17,8 @@
                 </div>
                 
                 <div class="anime-qualities-list" v-if="episode != null">
-                    <span v-for="quality in episodes[episode].qualities" :key="quality" v-on:click="loadEpisode(quality)">
+                    <p>Stream</p>
+                    <span v-for="quality in episodes[episode].qualities" :key="'stream_' + quality" v-on:click="streamEpisode(quality)">
                         {{ quality }}
                     </span>
                 </div>
@@ -65,7 +66,7 @@ export default {
             this.$refs[this.episode][0].classList.add("sel");
         },
 
-        loadEpisode(quality) {
+        streamEpisode(quality) {
             let link = this.episodes[this.episode].links[this.episodes[this.episode].qualities.indexOf(quality)];
             this.$parent.$emit('openPlayer', link, this.anime.name, this.episode);
         },
