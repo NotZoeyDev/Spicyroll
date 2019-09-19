@@ -19,7 +19,8 @@ app.on('ready', () => {
         show: false,
 
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
+            devTools: true
         }
     });
 
@@ -27,11 +28,12 @@ app.on('ready', () => {
     window.setMenu(null);
 
     // Load our index file
-    window.loadFile(path.resolve(__dirname, "index.html"));
+    window.loadFile(path.resolve(__dirname, "index.html"), {});
 
     // Show the window when it's ready to show up
     window.on('ready-to-show', () => {
         window.show();
+        window.webContents.openDevTools();
     });
 });
 

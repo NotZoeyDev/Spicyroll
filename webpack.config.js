@@ -11,8 +11,13 @@ let config = {
     },
 
     mode: process.env.NODE_ENV,
-    watch: process.env.NODE_ENV === "development",
     entry: path.resolve(__dirname, 'src', 'app.js'),
+    resolve: {
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js'
+        },
+        extensions: ['*', '.js', '.vue', '.json']
+    },
     module: {
         rules: [
             {
@@ -58,5 +63,7 @@ if(process.env.NODE_ENV === "development") {
         ]
     }
 }
+
+console.log(config);
 
 module.exports = config;

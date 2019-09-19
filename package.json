@@ -19,8 +19,7 @@
 		"electron": "^6.0.9",
 		"mini-css-extract-plugin": "^0.8.0",
 		"vue-style-loader": "^4.1.2",
-		"webpack-cli": "^3.3.8",
-		"webpack-dev-server": "^3.8.1"
+		"webpack-cli": "^3.3.8"
 	},
 	"dependencies": {
 		"@types/node": "^12.7.5",
@@ -37,7 +36,8 @@
 	},
 	"scripts": {
 		"start": "electron .",
-		"dev": "NODE_ENV=development webpack-dev-server --open",
-		"webpack": "NODE_ENV=production webpack"
+		"start:dev": "electron .",
+		"webpack": "set NODE_ENV=production&& webpack",
+		"webpack:dev": "set NODE_ENV=development&& webpack"
 	}
 }
