@@ -16,7 +16,7 @@
 	"main": "app/app.js",
 	"devDependencies": {
 		"css-loader": "^3.2.0",
-		"electron": "^6.0.9",
+		"electron": "^9.1.0",
 		"mini-css-extract-plugin": "^0.8.0",
 		"vue-style-loader": "^4.1.2",
 		"webpack-cli": "^3.3.8"
